@@ -1,0 +1,10 @@
+---
+description: Proof command and workspace entry — from scan/grill Q3 and Q5.
+alwaysApply: true
+---
+
+# Project (Cursor)
+
+- **Proof:** `REPLACE_WITH_Q3_COMMAND`
+- **Workspace:** open `REPLACE_WITH_MONOREPO_ROOT` in Cursor when applicable.
+- Other hosts: read [`AGENTS.md`](../../AGENTS.md) or [`GEMINI.md`](../../GEMINI.md) if present — do not duplicate their bodies here.
