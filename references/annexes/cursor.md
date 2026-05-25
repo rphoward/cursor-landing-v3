@@ -16,8 +16,9 @@ Reviewed: **May 2026**
 |---------|--------------|-------|
 | Project rules | `.cursor/rules/*.md`, `.cursor/rules/*.mdc` | Frontmatter: `alwaysApply`, `description`, `globs` / `paths` — **prefer `.mdc` for new rules** |
 | Legacy root rules | `.cursorrules` | Still found in brownfield repos; **inventory and migrate content** to `.cursor/rules/*.mdc` on merge — do not delete without Q6 |
-| Root instructions | `AGENTS.md` | Plain markdown alternative to rules; supported at root and in subdirs |
+| Root instructions | `AGENTS.md` | Plain markdown alternative to rules; supported at root and in subdirs — **Cursor auto-loads** unless excluded |
 | Nested instructions | `**/AGENTS.md` | More specific dirs override/generalize parent guidance |
+| Cursor ignore file | `.cursorignore` | Repo root; excludes paths from Agent context, search, and `@` — **not** read by Antigravity |
 | User rules | Cursor Settings → Rules | Global; not in repo scan |
 | Team rules | Cursor dashboard | Enterprise/team; not in repo scan |
 
@@ -59,7 +60,8 @@ Project MCP often at `.cursor/mcp.json`. Cross-tool patterns: [mcp.md](mcp.md).
 When `/cursor-landing` Phase 2 runs on the target repo:
 
 - Prefer **`.cursor/rules/*.mdc`** over legacy `.cursorrules` for new always-on guidance.
-- **Minimum:** `conduct.mdc` + thin `safety.mdc` from skill templates (`alwaysApply: true`; link `CONTEXT.md` and `AGENTS.md`) unless grill **Q13** chose one combined conduct rule.
+- **Minimum (Cursor-only / merge AGENTS):** `conduct.mdc` + thin `safety.mdc` from default templates (`alwaysApply: true`; link `CONTEXT.md` and `AGENTS.md`) unless grill **Q13** chose one combined conduct rule.
+- **Dual-host (Q14):** write **`.cursorignore`** from [cursorignore.dual-host.template](../../assets/cursorignore.dual-host.template); use **conduct-dual-host** + **safety-dual-host** templates; proof in **`project-proof.mdc`** — do not treat `AGENTS.md` as Cursor instruction source.
 - **Extra rules:** only from Scan Report `proposed_mdc_rules` (`glob` or `agent_request`) — do not invent paths.
 - **Legacy `.cursorrules`:** inventory in Phase 0; on Q6 **merge**, port substantive content into scoped `.mdc` files rather than leaving duplicate root rules.
 

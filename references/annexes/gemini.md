@@ -120,6 +120,6 @@ Path tables above stay authoritative. Host scoring: [SCAN-REPORT-SCHEMA.md](../S
 
 ## Cursor Landing conversion
 
-- **Q14 dual-host** or Q6 **leave** on `AGENTS.md` + `GEMINI.md`: extract Cursor-facing bullets into `.cursor/rules/` per [MERGE-TO-RULES.md](../MERGE-TO-RULES.md) — link GEMINI/AGENTS in rule bodies; do not paste full files into always-on `.mdc`.
+- **Q14 dual-host** or Q6 **leave** on `AGENTS.md` + `GEMINI.md`: write **`.cursorignore`** so Cursor does not auto-load left-in-place files; extract Cursor-facing bullets into `.cursor/rules/` per [MERGE-TO-RULES.md](../MERGE-TO-RULES.md) using dual-host templates — do not paste full files into always-on `.mdc`; outbound “see GEMINI.md” lines are deferral for humans, not Cursor instruction source.
 - **Q16 GEMINI split** (merge on **both** AGENTS and GEMINI): portable → AGENTS; `leave_native` → GEMINI; Cursor-only → `.mdc` — see MERGE-TO-RULES § Q16 and post-split checklist.
 - Populate Scan Report `(extract_from …)` + `merge_preview` per `(extract_from_shape …)` in schema.

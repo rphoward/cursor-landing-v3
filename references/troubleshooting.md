@@ -45,12 +45,27 @@ Dirty or missing git is OK — agent still writes `docs/EMERGENCY-HANDOFF.md`. P
 
 | Path | Notes |
 |------|--------|
+| `.cursorignore` | Dual-host (Q14): blocks Cursor from loading left-in-place `AGENTS.md` / `GEMINI.md` / `.agent/` |
 | `.cursor/rules/*.mdc` | Init: conduct + safety + optional `project-proof.mdc` (Q3); stack globs if Q15 persist |
 | `CONTEXT.md` | Glossary only |
 | `AGENTS.md` | Only if Q6 replace/merge — else unchanged |
 | `docs/EMERGENCY-HANDOFF.md` | Emergency only |
 
-**Q6** per file. **Q14** dual-host: leave AGENTS/GEMINI, extract to `.mdc` — [MERGE-TO-RULES.md](MERGE-TO-RULES.md). Proof fails → fix **`project-proof.mdc`**, not AGENTS when left.
+**Q6** per file. **Q14** dual-host: leave AGENTS/GEMINI, write **`.cursorignore`**, dual-host conduct/safety templates — [MERGE-TO-RULES.md](MERGE-TO-RULES.md). Proof fails → fix **`project-proof.mdc`**, not AGENTS when left.
+
+## Cursor still loads factory AGENTS after Q14
+
+**Symptoms:** Cursor Agent quotes SageClone/swarm/ADK text from root `AGENTS.md` even though `.cursor/rules/` point at `CONTEXT.md`.
+
+**Cause:** Cursor [auto-loads `AGENTS.md`](https://cursor.com/docs/context/rules). Leaving the file for Antigravity does not stop Cursor. Conduct text saying “ignore AGENTS” is not mechanical.
+
+**Fix:**
+
+1. Confirm **`.cursorignore`** at repo root lists `AGENTS.md`, `GEMINI.md`, `**/GEMINI.md`, `.agent/` (and `CLAUDE.md` only if you chose that in Q14).
+2. Confirm **dual-host** `conduct.mdc` does not use `AGENTS.md` as Cursor proof or guardrails source.
+3. Start a **new Cursor chat** after `.cursorignore` changes so context reloads.
+
+Re-run Phase 2 dual-host steps from [MERGE-TO-RULES.md](MERGE-TO-RULES.md) if `.cursorignore` is missing.
 
 ## Wrong repo / other tools
 

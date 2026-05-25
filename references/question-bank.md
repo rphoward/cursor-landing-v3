@@ -34,7 +34,10 @@
        (default several_small)
        (feeds MDC-RULES-FORMAT))
   (Q14 (when dual_host AGENTS_and_GEMINI_or_agent)
-       (ask "Leave AGENTS+GEMINI; thin CONTEXT; extract Cursor guardrails to .mdc?")
+       (ask "Leave AGENTS+GEMINI; thin CONTEXT; extract Cursor guardrails to .mdc; write .cursorignore so Cursor does not auto-load AGENTS?")
+       (sub_ask "Also list CLAUDE.md in .cursorignore? (yes/no — Claude Code vs Cursor)")
+       (closeout_include cursorignore_path_list template_choice dual_host_conduct_safety)
+       (remind new_Cursor_chat_after_phase2)
        (feeds dual_host_preset)
        (declining_Q14 does_not_end_grill))
   (Q16 (when root_AGENTS_and_GEMINI portable_overlap_not_mere_coexistence)
@@ -55,7 +58,7 @@
 ; ── WHEN TO ASK (conditional; see SKILL phase_1_grill) ──
 ; Q11–Q12: only when scan found memory-bank or duplicate MCP configs.
 ; Q13: when Phase 2 will create or reshape .cursor/rules/ (empty dir, Q6 replace/merge on rules).
-; Q14: when GEMINI.md or .agent/ + AGENTS.md (dual-host preset before merge is “too hard”). No to Q14 → still Q6 per file.
+; Q14: when GEMINI.md or .agent/ + AGENTS.md (dual-host preset). Ask CLAUDE.md ignore yes/no. Closeout lists .cursorignore paths. No to Q14 → still Q6 per file.
 ; Q16: when portable overlap in root AGENTS+GEMINI. Requires merge on BOTH; see MERGE § Q16 post-split checklist.
 ; Q15: when stack_signals Tier A, verify_commands, or deploy files in scan — persist .mdc vs scan_only.
 ; Q6: per artifact when scan found CONTEXT, AGENTS, GEMINI, .cursor/rules, CLAUDE — no writes until answered.

@@ -10,6 +10,13 @@ Phase 0 **proposes** a rule set (Scan Report `proposed_mdc_rules`). Phase 2 **wr
 
 ---
 
+## Template selection
+
+| Path | Templates | `AGENTS.md` in always-on? |
+|------|-----------|---------------------------|
+| **Cursor-only** (Q6 merge/replace AGENTS) | `conduct.template.mdc`, `safety.template.mdc` | Yes — link for guardrails/proof fallback |
+| **Dual-host** (Q14 or leave AGENTS + GEMINI) | `conduct-dual-host.template.mdc`, `safety-dual-host.template.mdc` + `.cursorignore` | **No** — Cursor isolation via `.cursorignore`; proof in `project-proof.mdc` |
+
 ## Default rule set (brownfield init)
 
 | File (typical) | `alwaysApply` | Purpose |
@@ -17,7 +24,7 @@ Phase 0 **proposes** a rule set (Scan Report `proposed_mdc_rules`). Phase 2 **wr
 | `conduct.mdc` | true | Links [`CONTEXT.md`](../../CONTEXT.md) + [`AGENTS.md`](../../AGENTS.md); reply style; points to `project-proof.mdc` for proof when written |
 | `safety.mdc` | true | Destructive commands, scope, secrets, pause before large edits |
 
-Templates: [assets/conduct.template.mdc](../assets/conduct.template.mdc), [assets/safety.template.mdc](../assets/safety.template.mdc), [assets/project-proof.template.mdc](../assets/project-proof.template.mdc) (Q3/Q5 — replace placeholders; omit if Q15 scan_only).
+Templates: [assets/conduct.template.mdc](../assets/conduct.template.mdc), [assets/safety.template.mdc](../assets/safety.template.mdc), [assets/conduct-dual-host.template.mdc](../assets/conduct-dual-host.template.mdc), [assets/safety-dual-host.template.mdc](../assets/safety-dual-host.template.mdc), [assets/project-proof.template.mdc](../assets/project-proof.template.mdc) (Q3/Q5 — replace placeholders; omit if Q15 scan_only). Dual-host: [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template).
 
 **Stack / infra (mdc-only):** Catalog [stack-signals.md](stack-signals.md) `(stack_signals_catalog …)`; emit caps in [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) `(stack_mdc_caps …)`. Tier **A** → `proposed_mdc_rules` only — **never** append proof, deploy, or DB/framework lists to `AGENTS.md` / `GEMINI.md` / `CLAUDE.md`. Grill **Q15**: persist Tier A to `.mdc` or scan-only.
 
@@ -87,9 +94,10 @@ Repeat per planned rule:
 Authoritative workflow: [SKILL.md](../SKILL.md) § Phase 2.
 
 1. `CONTEXT.md` (glossary)
-2. `AGENTS.md` — **default Q6 leave** when brownfield file exists; proof/deploy/monorepo go to **`project-proof.mdc`** / stack globs instead
-3. `.cursor/rules/` — **conduct + safety** minimum; then **`proposed_mdc_rules`** from scan + Q15 (stack Tier A); skip stack `.mdc` writes when Q15 **scan_only**
-4. Optional `CLAUDE.md` bridge per annex
+2. **Dual-host only:** `.cursorignore` (merge append-only) — then skip step 3 below for AGENTS/GEMINI when Q6 = leave
+3. `AGENTS.md` — **default Q6 leave** when brownfield file exists; proof/deploy/monorepo go to **`project-proof.mdc`** / stack globs instead
+4. `.cursor/rules/` — **conduct + safety** (template per table above); then **`proposed_mdc_rules`** from scan + Q15 (stack Tier A); skip stack `.mdc` writes when Q15 **scan_only**
+5. Optional `CLAUDE.md` bridge per annex (omit from `.cursorignore` when Q14 CLAUDE sub-ask is no)
 
 Q6 applies **per artifact** — see [MERGE-TO-RULES.md](MERGE-TO-RULES.md). Grill **Q13** when Phase 2 creates or reshapes the rules set; **Q14** for dual-host preset (see [question-bank.md](question-bank.md)).
 

@@ -7,4 +7,4 @@ alwaysApply: true
 
 - **Proof:** `REPLACE_WITH_Q3_COMMAND`
 - **Workspace:** open `REPLACE_WITH_MONOREPO_ROOT` in Cursor when applicable.
-- Other hosts: read [`AGENTS.md`](../../AGENTS.md) or [`GEMINI.md`](../../GEMINI.md) if present — do not duplicate their bodies here.
+- **Other hosts (Antigravity / Gemini):** use [`AGENTS.md`](../../AGENTS.md) and [`GEMINI.md`](../../GEMINI.md) in those tools. On dual-host inits, those paths are usually in [`.cursorignore`](../../.cursorignore) so Cursor does not load them — do not duplicate their bodies here.

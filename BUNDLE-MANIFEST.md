@@ -33,7 +33,10 @@ references/
 
 assets/
   conduct.template.mdc
+  conduct-dual-host.template.mdc
   safety.template.mdc
+  safety-dual-host.template.mdc
+  cursorignore.dual-host.template
   project-proof.template.mdc
   CONTEXT.template.md
   AGENTS.template.md

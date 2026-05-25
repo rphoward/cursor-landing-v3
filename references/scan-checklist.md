@@ -52,7 +52,7 @@ Route to `docs/EMERGENCY-HANDOFF.md` or trim — not `CONTEXT.md`.
 ## Health
 
 - [ ] Bloated AGENTS / run-state; duplicate rules across tools; secrets in MCP JSON; stale README verify
-- [ ] Dual-host (AGENTS + GEMINI / `.agent/`): note Q14 path — `proposed_mdc_rules` with `(extract_from (slice …) …)` per [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) `(extract_from_shape …)` and [MERGE-TO-RULES.md](MERGE-TO-RULES.md); do not paste whole AGENTS/GEMINI into always-on `.mdc`
+- [ ] Dual-host (AGENTS + GEMINI / `.agent/`): note Q14 path — propose `.cursorignore` paths (`AGENTS.md`, `GEMINI.md`, `**/GEMINI.md`, `.agent/`; optional `CLAUDE.md` in `open_questions`); `proposed_mdc_rules` with `(extract_from (slice …) …)` per [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) `(extract_from_shape …)` and [MERGE-TO-RULES.md](MERGE-TO-RULES.md); dual-host templates — do not paste whole AGENTS/GEMINI into always-on `.mdc`
 - [ ] Legacy host signals (`legacy_host_signals` — scoring in [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) `(legacy_host_signals_scoring …)`)
 - [ ] Conflicting proof commands across agent files
 

@@ -91,7 +91,10 @@ disable-model-invocation: true
       (Q16_split_when user_yes_Q16
         (order split_AGENTS_GEMINI_then CONTEXT_then cursor_rules))
       (dual_host_when Q14_or_leave_AGENTS_GEMINI_no_Q16
-        (order CONTEXT_then cursor_rules_only))
+        (order CONTEXT_then cursorignore_merge_then cursor_rules_only)
+        (cursorignore template assets/cursorignore.dual-host.template append_only_if_exists)
+        (templates conduct-dual-host.template.mdc safety-dual-host.template.mdc)
+        (forbid conduct_links_AGENTS_as_cursor_source))
       (default
         (order CONTEXT AGENTS_if_not_leave cursor_rules CLAUDE_optional)))
 
@@ -100,7 +103,10 @@ disable-model-invocation: true
     (GEMINI (skip_if Q6_leave))
     (rules
       (load references/MDC-RULES-FORMAT.md references/stack-signals.md)
-      (minimum conduct.template.mdc + safety.template.mdc unless Q13_combined)
+      (minimum
+        (dual_host conduct-dual-host.template.mdc + safety-dual-host.template.mdc)
+        (default conduct.template.mdc + safety.template.mdc)
+        unless Q13_combined)
       (stack_infra
         (persist_via proposed_mdc_rules_only)
         (Q15_scan_only → skip Tier_A stack mdc writes keep conduct+safety)
@@ -126,6 +132,10 @@ disable-model-invocation: true
     (link_check)
     (proof_from Q3_or_note_not_run)
     (gates per MERGE-TO-RULES)
+    (dual_host_when Q14_or_dual_host_path
+      (cursorignore_lists_left_in_place_files)
+      (conduct_dual_host_no_AGENTS_as_cursor_source)
+      (note_new_chat_after_cursorignore_written))
     (emergency all_sections_plus_resume_prompt))
 
   (edge_cases

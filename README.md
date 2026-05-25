@@ -17,6 +17,7 @@ You're about to do it again.
 | Output | What it is |
 |--------|------------|
 | **Scan (chat)** | One `(scan_report ...)` block — Phase 0 only |
+| **`.cursorignore`** | Dual-host (Q14): blocks Cursor from loading `AGENTS.md` / `GEMINI.md` / `.agent/` left for Antigravity |
 | **`.cursor/rules/*.mdc`** | conduct + safety; optional `project-proof.mdc` (Q3); stack globs if Q15 says persist |
 | **`CONTEXT.md`** | Glossary only |
 | **`AGENTS.md`** | Only if Q6 replace/merge — default **leave** when other hosts use it |
@@ -46,7 +47,7 @@ Saying **no** to a preset (dual-host Q14, GEMINI split Q16) is fine — the agen
 
 Plain English does not load this skill. New to Cursor Agent? [Quickstart](https://cursor.com/docs/get-started/quickstart) (~10 min).
 
-**Check:** `CONTEXT.md` is glossary-only; run proof from `project-proof.mdc` if present; dual-host → leave AGENTS/GEMINI — [troubleshooting.md](references/troubleshooting.md)
+**Check:** `CONTEXT.md` is glossary-only; run proof from `project-proof.mdc` if present; dual-host → `.cursorignore` + leave AGENTS/GEMINI — start a **new Cursor chat** after init — [troubleshooting.md](references/troubleshooting.md)
 
 ---
 
