@@ -46,6 +46,18 @@
       (not_confused_with "CI workflow run")))
   (trim_candidates
     (row
+      (file_path fictional-app/node_modules/)
+      (type_id indexing_noise)
+      (reason "installed dependencies — not product source")
+      (suggested_action append_indexing_ignore)
+      (confidence high))
+    (row
+      (file_path fictional-app/dist/)
+      (type_id indexing_noise)
+      (reason "build output directory")
+      (suggested_action append_indexing_ignore)
+      (confidence high))
+    (row
       (file_path fictional-app/memory-bank/progress.md)
       (type_id run_state)
       (reason "ephemeral task log from prior agent session")

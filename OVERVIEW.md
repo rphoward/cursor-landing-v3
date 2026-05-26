@@ -2,7 +2,7 @@
 
 Brownfield repos pick up leftover agent files and no shared glossary. **Cursor Landing** scans once, asks a few questions, writes durable guidance.
 
-**This bundle (v2):** pseudo-Lisp scan report · **`/cursor-landing`** · install [`references/install.md`](references/install.md)
+**This bundle (v3 dev):** pseudo-Lisp scan report · **`/cursor-landing`** · install [`references/install.md`](references/install.md) · GitHub [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3)
 
 Not [Cursor’s IDE quickstart](https://cursor.com/docs/get-started/quickstart) — this skill writes repo-local files for agents to read.
 

@@ -1,6 +1,6 @@
 # Cursor — agent surfaces (scan reference)
 
-**v2 bundle:** invoke **`/cursor-landing`** on the target repo.
+**v3 dev bundle:** invoke **`/cursor-landing`** on the target repo.
 
 **Scope:** Inventory only. This cursor-landing skill **executes** in Cursor Agent; see [../cursor-notes.md](../cursor-notes.md) for invoke/runtime behavior.
 

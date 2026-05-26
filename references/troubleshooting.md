@@ -1,6 +1,6 @@
 # Troubleshooting (new users)
 
-**v2 bundle:** `/cursor-landing`, folder `cursor-landing`. Phase 0 = one `(scan_report ...)` in chat ([SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md)). Proof/stack → `.mdc` ([MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md), catalog [stack-signals.md](stack-signals.md), caps in schema); default **leave** `AGENTS.md` / `GEMINI.md`.
+**v3 dev bundle:** `/cursor-landing`, folder `cursor-landing`. Phase 0 = one `(scan_report ...)` in chat ([SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md)). Proof/stack → `.mdc` ([MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md), catalog [stack-signals.md](stack-signals.md), caps in schema); default **leave** `AGENTS.md` / `GEMINI.md`.
 
 Manual skill — type the **`/` command** in **Cursor Agent** on the **target repo**.
 
@@ -45,6 +45,7 @@ Dirty or missing git is OK — agent still writes `docs/EMERGENCY-HANDOFF.md`. P
 
 | Path | Notes |
 |------|--------|
+| `.cursorindexingignore` | Phase 2: baseline template + up to 8 scan `indexing_noise` paths (append-only); best-effort `read` after write |
 | `.cursorignore` | Dual-host (Q14): blocks Cursor from loading left-in-place `AGENTS.md` / `GEMINI.md` / `.agent/` |
 | `.cursor/rules/*.mdc` | Init: conduct + safety + optional `project-proof.mdc` (Q3); stack globs if Q15 persist |
 | `CONTEXT.md` | Glossary only |
@@ -74,6 +75,10 @@ Revert mistaken init on the skill source repo. Skill runs only in Cursor Agent o
 ## Grill didn’t finish / my answers weren’t applied
 
 Phase 2 waits for **Q6 per artifact** and grill **closeout** you OK’d — see [MERGE-TO-RULES.md](MERGE-TO-RULES.md) and [SKILL.md](../SKILL.md) Phase 1. Declining Q14 or Q16 does **not** end the grill. Say **finish the grill** if writes started early.
+
+## Indexing and ignore files
+
+`.cursorindexingignore` and `.cursorignore` steer what Cursor indexes and loads in the editor and in **@** search — they are **not** full security boundaries; terminals, other tools, and scripts may still read those paths. See [Cursor ignore files](https://cursor.com/docs/reference/ignore-file).
 
 ## Dual-host / Q16 split looks broken in Antigravity or Gemini CLI
 

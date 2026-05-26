@@ -44,6 +44,15 @@ disable-model-invocation: true
       (CONTEXT glossary_sources_only)
       (forbid architecture run_state proof stack_trees))
 
+    (trim_candidates_indexing_noise
+      (checklist references/scan-checklist.md Indexing_noise_section)
+      (shape references/SCAN-REPORT-SCHEMA.md indexing_noise_rows)
+      (emit type_id indexing_noise suggested_action append_indexing_ignore)
+      (cap 8 rows_per_scan_report)
+      (forbid
+        paste_assets_cursorindexingignore_baseline_template_into_scan_report
+        echo_baseline_ignore_globs_in_chat))
+
     (merge_heavy
       (when AGENTS_md GEMINI_md dot_agent legacy_cursorrules)
       (populate proposed_mdc_rules extract_from merge_preview)
@@ -75,7 +84,8 @@ disable-model-invocation: true
     (one_question_at_a_time prefer_scan)
     (ambiguity_only no_external_grill_skills)
     (Q4_when proposed_glossary confirm_or_correct_rows)
-    (conditional Q11 memory-bank Q12 duplicate_mcp Q13 reshape_rules Q16 portable_overlap_AGENTS_GEMINI)
+    (conditional Q11 memory-bank Q12 duplicate_mcp Q13 reshape_rules Q14 dual_host Q16 portable_overlap_AGENTS_GEMINI)
+    (Q14 load references/question-bank.md Q14_plain_wording keep_both_or_cursor_only)
     (declining_Q14_or_Q16 does_not_end_grill still_complete_Q6_per_artifact)
     (no_repo_writes_until Q6_done glossary_in_chat_only)
     (before_phase2_merge_or_Q16_split
@@ -90,13 +100,55 @@ disable-model-invocation: true
     (phase_2_route
       (Q16_split_when user_yes_Q16
         (order split_AGENTS_GEMINI_then CONTEXT_then cursor_rules))
-      (dual_host_when Q14_or_leave_AGENTS_GEMINI_no_Q16
+      (cursor_only_when Q14_answer_cursor_only
+        (order CONTEXT_then cursor_rules CLAUDE_optional)
+        (skip cursorignore.dual-host.template)
+        (cursorignore_optional
+          (only_when scan_or_grill never_show_Agent_paths)
+          (append_only_if_exists at_target_repo_root)
+          (examples tracked_secrets_user_confirmed)
+          (forbid AGENTS_md GEMINI_md dot_agent_paths unless_user_explicit))
+        (templates conduct.template.mdc safety.template.mdc unless Q13_combined)
+        (still_run indexing_ignore always))
+      (dual_host_when Q14_answer_keep_both_or_leave_AGENTS_GEMINI_no_Q16_and_not_Q16_split
         (order CONTEXT_then cursorignore_merge_then cursor_rules_only)
         (cursorignore template assets/cursorignore.dual-host.template append_only_if_exists)
+        (CLAUDE_md_in_cursorignore when Q14_sub_ask_yes)
         (templates conduct-dual-host.template.mdc safety-dual-host.template.mdc)
-        (forbid conduct_links_AGENTS_as_cursor_source))
+        (forbid conduct_links_AGENTS_as_cursor_source)
+        (remind new_Cursor_chat_after_cursorignore_written)
+        (still_run indexing_ignore always))
       (default
-        (order CONTEXT AGENTS_if_not_leave cursor_rules CLAUDE_optional)))
+        (order CONTEXT AGENTS_if_not_leave cursor_rules CLAUDE_optional)
+        (still_run indexing_ignore always)))
+
+    (indexing_ignore
+      (always_every_normal_phase_2_not_emergency)
+      (target .cursorindexingignore at_target_repo_root)
+      (template assets/cursorindexingignore.baseline.template append_only_if_exists)
+      (phase_2_order
+        (1 write_baseline_from_template)
+        (2 append_indexing_noise_trim_candidates)
+        (3 read_target_root_cursorindexingignore_once))
+      (step_1_write_baseline
+        (if_missing create_from_template)
+        (if_exists append_template_lines_only do_not_remove_user_lines))
+      (step_2_append_trim_candidates
+        (source phase_0_scan_report_trim_candidates_from_chat)
+        (filter
+          (type_id indexing_noise)
+          (suggested_action append_indexing_ignore))
+        (cap 8 rows_max)
+        (write_mode append_only_to_target .cursorindexingignore)
+        (one_path_per_row use file_path from_each_row)
+        (skip_if path_already_present_in_file))
+      (step_3_read_indexing_ignore_once
+        (read .cursorindexingignore at_target_repo_root)
+        (purpose best_effort_index_nudge_same_session)
+        (optional_one_read_under_single_appended_path only_if_needed_for_sanity_not_tree_scan))
+      (forbid echo_baseline_globs_inside_phase_0_scan_report)
+      (forbid auto_edit_target_dot_gitignore)
+      (forbid repo_wide_glob_or_grep_resync_rituals))
 
     (CONTEXT (load references/CONTEXT-FORMAT.md) (cap_terms 12..20))
     (AGENTS (load references/AGENTS-FORMAT.md) (skip_if Q6_leave))
@@ -129,13 +181,27 @@ disable-model-invocation: true
 
   ; ── PHASE 3 — VERIFY ──
   (phase_3_verify
+    (load references/MERGE-TO-RULES.md)
+    (phase_3_closeout_chat
+      (authority MERGE-TO-RULES_initializer_closeout)
+      (chat_only forbid_new_repo_doc_unless_user_asks)
+      (forbid_in_user_chat skill_jargon SDK Merkle trim_candidates indexing_noise scan_report)
+      (say_in_chat
+        (authority MERGE-TO-RULES_initializer_closeout)
+        (deliver plain_english_six_bullets adapt_to_actual_phase_2_writes per MERGE-TO-RULES)
+        (gates
+          (new_chat_when
+            (or wrote_cursorignore_for_dual_host
+                indexing_ignore_changed_and_user_cares_about_at_search))
+          (proof_from Q3_unchanged_wording)
+          (forbid skill_jargon_in_user_copy))))
     (link_check)
     (proof_from Q3_or_note_not_run)
     (gates per MERGE-TO-RULES)
     (dual_host_when Q14_or_dual_host_path
       (cursorignore_lists_left_in_place_files)
       (conduct_dual_host_no_AGENTS_as_cursor_source)
-      (note_new_chat_after_cursorignore_written))
+      (new_chat_via phase_3_closeout_chat — do not duplicate full script here))
     (emergency all_sections_plus_resume_prompt))
 
   (edge_cases

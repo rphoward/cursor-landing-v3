@@ -12,7 +12,11 @@
 
 ## Install from GitHub
 
-Clone [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2), then copy the **repository root** flat into `~/.cursor/skills/cursor-landing/` as above. Restart Cursor and confirm **`/cursor-landing`** on a target repo.
+**Development (v3):** Clone [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3), then copy the **repository root** flat into `~/.cursor/skills/cursor-landing/` as above.
+
+**Public release today:** [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2) — use until v3 is released.
+
+Restart Cursor and confirm **`/cursor-landing`** on a target repo.
 
 **Windows (factory maintainer copy):**
 

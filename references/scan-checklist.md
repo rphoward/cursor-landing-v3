@@ -49,6 +49,15 @@ Home dirs (`~/.cursor`, `~/.codex`, etc.): mention only; don’t read without pe
 
 Route to `docs/EMERGENCY-HANDOFF.md` or trim — not `CONTEXT.md`.
 
+## Indexing noise (`.cursorindexingignore` trim candidates)
+
+Phase 0 only — record in `(scan_report (trim_candidates …))`; Phase 2 appends paths. See [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) `(indexing_noise_rows …)`.
+
+- [ ] **Do not** paste globs from `assets/cursorindexingignore.baseline.template` into the scan report — baseline is written at Phase 2 from that template, not echoed in chat
+- [ ] Repo-specific build output, vendor trees, caches, and similar paths that waste codebase search — emit as `trim_candidates` with `type_id` **`indexing_noise`**, `suggested_action` **`append_indexing_ignore`**, repo-relative `file_path` (directory or glob line as the target file will receive)
+- [ ] **Cap 8** `indexing_noise` rows per scan report (prioritize largest noise: e.g. `node_modules/`, `dist/`, `build/`, `.next/`, `target/`, `__pycache__/`, `.venv/`, `vendor/`, coverage output — only when present on disk)
+- [ ] Do not use `indexing_noise` for run-state logs (`run_state` + `emergency_only` or `exclude_from_context` instead)
+
 ## Health
 
 - [ ] Bloated AGENTS / run-state; duplicate rules across tools; secrets in MCP JSON; stale README verify

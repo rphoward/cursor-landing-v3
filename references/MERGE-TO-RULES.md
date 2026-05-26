@@ -22,6 +22,21 @@ Scan shape and trim signals: [SCAN-REPORT-SCHEMA.md](SCAN-REPORT-SCHEMA.md) (art
 
 ---
 
+## Grill Q14 — `.cursorignore` policy
+
+Ask when scan shows `GEMINI.md` or `.agent/` plus `AGENTS.md` ([question-bank.md](question-bank.md) Q14). **Always** run Phase 2 **`indexing_ignore`** (`.cursorindexingignore` baseline + trim append + read) regardless of Q14 answer.
+
+| Q14 answer | `.cursorignore` at target repo root | Other Phase 2 writes |
+|------------|-------------------------------------|----------------------|
+| **keep_both** | **Merge** [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) **append-only** (`AGENTS.md`, `GEMINI.md`, `**/GEMINI.md`, `.agent/`). Add `CLAUDE.md` only when Q14 sub-ask is **yes**. Remind user: **new Cursor chat** after write. | `CONTEXT.md` → dual-host conduct/safety templates → `.cursor/rules/` (extract, do not paste whole AGENTS/GEMINI). Leave AGENTS/GEMINI on disk. |
+| **cursor_only** | **Skip** dual-host template block. Optional **append-only** lines only for scan/grill **never-show-Agent** paths (e.g. tracked secrets the user must not expose to Cursor Agent). Do **not** list `AGENTS.md` / `GEMINI.md` / `.agent/` unless user explicitly asks to hide them. | `CONTEXT.md` → default or slim AGENTS per Q6 → `.cursor/rules/`. |
+
+**Why `.cursorignore` (keep_both):** Cursor [auto-loads root `AGENTS.md`](https://cursor.com/docs/context/rules). MDC text alone cannot block that. `.cursorignore` excludes Agent context, search, and `@` mentions. Antigravity / Gemini CLI do **not** read `.cursorignore`.
+
+**Template:** [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) — merge append-only; do not remove unrelated user entries.
+
+---
+
 ## Content routing (`content_kind` → destination)
 
 Use during Phase 0 `extract_from`, Phase 1 extraction tables, and **Q16** split rows. **Forbidden during Q16:** Cursor-only bullets → **AGENTS.md**; deleting GEMINI `leave_native` without a confirmed row.
@@ -52,9 +67,7 @@ Ask **separately** when scan found the file (or offer the dual-host preset in on
 
 > Leave `AGENTS.md` and `GEMINI.md` unchanged; write thin `CONTEXT.md`; **write or merge `.cursorignore`** so Cursor does not auto-load left-in-place agent files; build `.cursor/rules/` from **dual-host templates** (`conduct-dual-host`, `safety-dual-host`, `project-proof`) by extracting Cursor-facing guardrails from AGENTS, GEMINI, `.agent/rules/`, and legacy `.cursorrules`.
 
-**Why `.cursorignore`:** Cursor [auto-loads root `AGENTS.md`](https://cursor.com/docs/context/rules). MDC text alone cannot block that. `.cursorignore` excludes Agent context, search, and `@` mentions. Antigravity does not read `.cursorignore`.
-
-**Default `.cursorignore` paths (Q14 yes):** `AGENTS.md`, `GEMINI.md`, `**/GEMINI.md`, `.agent/` — template [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template). **Merge append-only** if `.cursorignore` already exists. **Optional:** `CLAUDE.md` when Q14 sub-ask is yes (Claude Code still uses `CLAUDE.md`; Cursor will not load it when ignored).
+**Default `.cursorignore` paths (Q14 keep_both):** see [Grill Q14](#grill-q14--cursorignore-policy) — template [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template). **Merge append-only** if `.cursorignore` already exists. **Optional:** `CLAUDE.md` when Q14 sub-ask is yes.
 
 ---
 
@@ -99,9 +112,13 @@ If the agent cannot fill `extract_from` + `merge_preview` for a proposed rule, *
 
 ## Phase 2 — extract, do not duplicate
 
-**Order (Q16 yes):** Split AGENTS/GEMINI per extraction table **first** → `CONTEXT.md` → `.cursor/rules/` (extract from **updated** files). **Forbid** split until Q6 **merge on both** AGENTS and GEMINI.
+**Indexing (every path):** Run [SKILL.md](../SKILL.md) `(indexing_ignore …)` **first** — `(phase_2_order 1..3)` baseline template → trim append (cap 8) → `read` `.cursorindexingignore` once. Matches [MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md) Phase 2 preamble.
 
-**Order (dual-host, no Q16):** `CONTEXT.md` → **`.cursorignore`** (merge) → `.cursor/rules/` → optional `CLAUDE.md` bridge (only when not in `.cursorignore`). **Skip** `AGENTS.md` / `GEMINI.md` when Q6 = leave.
+**Order (Q16 yes):** **indexing_ignore** → split AGENTS/GEMINI per extraction table → `CONTEXT.md` → `.cursor/rules/` (extract from **updated** files). **Forbid** split until Q6 **merge on both** AGENTS and GEMINI.
+
+**Order (dual-host, no Q16):** **indexing_ignore** → `CONTEXT.md` → **`.cursorignore`** (merge) → `.cursor/rules/` → optional `CLAUDE.md` bridge (only when not in `.cursorignore`). **Skip** `AGENTS.md` / `GEMINI.md` when Q6 = leave.
+
+**Order (cursor-only / default brownfield):** **indexing_ignore** → `CONTEXT.md` → `AGENTS.md` (if Q6 not leave) → `.cursor/rules/` → optional `CLAUDE.md`.
 
 1. **CONTEXT** — approved `proposed_glossary` + Phase 1 Q4 disambiguation; fallback: nouns from AGENTS/GEMINI **glossary sections only** (not project map trees). See [CONTEXT-FORMAT.md](CONTEXT-FORMAT.md).
 2. **`.cursorignore`** — from [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template); include paths user confirmed in Q14 closeout; uncomment `CLAUDE.md` only when Q14 sub-ask is yes.
@@ -153,6 +170,23 @@ Omit `project-proof.mdc` when Q15 **scan_only**.
 2. **`@` imports** removed from GEMINI still reachable from **AGENTS**.
 3. **Reconcile `.mdc`** — no duplicate bullets now only in AGENTS.
 4. **Nested** — matching **`**/AGENTS.md`** or **`.agents/rules/`** if nested GEMINI trimmed.
+
+---
+
+## Phase 3 — initializer closeout (chat only)
+
+After Phase 2 writes, finish init in **chat** with plain English. Loader: [SKILL.md](../SKILL.md) `phase_3_closeout_chat`. **Do not** add a new repo doc unless the user asks. **Do not** use skill jargon, internal scan type names, or SDK/resync API talk in this closeout.
+
+**Say roughly (adapt to what Phase 2 actually wrote):**
+
+1. **What we set up** — A short glossary in `CONTEXT.md`, Cursor guardrails under `.cursor/rules/`, and at the repo root any ignore files we added: `.cursorindexingignore` (keeps heavy folders out of codebase search), and `.cursorignore` only if you chose **keep both** tools or asked to hide specific paths from Cursor Agent.
+2. **Other tool** — If grill Q14 ran: confirm whether you still use **another AI tool or IDE** on this repo (same `AGENTS.md` / `GEMINI.md` files), or **Cursor is your main place** — use the Q14 answer when you have it.
+3. **New Cursor chat** — Ask them to open a **new Cursor chat** when we wrote `.cursorignore` for dual-host setup, **or** when they care about fresh `@` mentions / codebase search after indexing-ignore changes.
+4. **Proof** — The proof command from grill Q3: run it or say *proof not run*; do not change the command wording.
+5. **Ignore ≠ security** — One line: ignore files help Cursor’s editor features; they are **not** full security — terminal and other tools may still read files on disk.
+6. **Search refresh** — One line: search and index refresh run in the **background**; for best `@` results after ignore changes, **start a new chat**.
+
+The checklist below is for **agent verification**, not user-facing closeout copy.
 
 ---
 

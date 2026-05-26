@@ -1,6 +1,6 @@
-# Repository manifest (cursor-landing v2)
+# Repository manifest (cursor-landing v3 dev)
 
-Pseudo-Lisp skill (experimental v2). GitHub: [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2). Flat install: `~/.cursor/skills/cursor-landing/SKILL.md`. Slash: **`/cursor-landing`**.
+Pseudo-Lisp skill bundle. **Dev ship:** [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3) (`github-publish-lisp/cursor-landing-skill/`). **Live v2** ([cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2)) stays frozen until a deliberate release. Flat install: `~/.cursor/skills/cursor-landing/SKILL.md`. Slash: **`/cursor-landing`**.
 
 ## Required layout
 
@@ -37,6 +37,7 @@ assets/
   safety.template.mdc
   safety-dual-host.template.mdc
   cursorignore.dual-host.template
+  cursorindexingignore.baseline.template
   project-proof.template.mdc
   CONTEXT.template.md
   AGENTS.template.md

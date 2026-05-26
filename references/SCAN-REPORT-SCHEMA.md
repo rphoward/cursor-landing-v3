@@ -39,7 +39,21 @@
 
   (trim_candidates
     (row file_path type_id reason suggested_action confidence)
-    (suggested_action emergency_only exclude_from_context merge_to_agents ask_user)
+    (type_id
+      run_state
+      indexing_noise)
+    (suggested_action
+      emergency_only
+      exclude_from_context
+      merge_to_agents
+      ask_user
+      append_indexing_ignore)
+    (indexing_noise_rows
+      (type_id indexing_noise)
+      (suggested_action append_indexing_ignore)
+      (max_per_scan_report 8)
+      (phase_2 appends file_path lines to target_root .cursorindexingignore)
+      (forbid paste baseline template globs into scan_report — baseline lives in assets/cursorindexingignore.baseline.template only))
     (forbid promote_run_state_to_CONTEXT_or_always_on_mdc))
 
   (proposed_mdc_rules
