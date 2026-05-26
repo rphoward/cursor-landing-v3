@@ -8,7 +8,7 @@ Now you're looking at Cursor. New tool, fresh start, competitive model, high lim
 
 You're about to do it again.
 
-**Cursor Landing** stops that. One command reads your repo and writes durable agent guidance. **This bundle (v3 dev):** `/cursor-landing` → `~/.cursor/skills/cursor-landing/`. Clone [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3) for development; [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2) remains the frozen public release until you ship v3.
+**Cursor Landing** stops that. One command reads your repo and writes durable agent guidance. **This bundle (v3):** `/cursor-landing` → `~/.cursor/skills/cursor-landing/`. **Ship repo:** [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3) — commit and push from this repository root only. Frozen v2 ([cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2)) stays on GitHub for the prior public release; the factory no longer keeps a second checkout beside this tree.
 
 ---
 
