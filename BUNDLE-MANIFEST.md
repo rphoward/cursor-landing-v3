@@ -1,6 +1,8 @@
-# Repository manifest (cursor-landing v3 dev)
+# Repository manifest (cursor-landing v3)
 
-Pseudo-Lisp skill bundle. **Dev ship:** [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3) (`github-publish-lisp/cursor-landing-skill/`). **Live v2** ([cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2)) stays frozen until a deliberate release. Flat install: `~/.cursor/skills/cursor-landing/SKILL.md`. Slash: **`/cursor-landing`**.
+Pseudo-Lisp skill bundle. **Ship repo:** [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3) — this repository. Flat install: `~/.cursor/skills/cursor-landing/SKILL.md`. Slash: **`/cursor-landing`**.
+
+**Prior public release:** [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2) — frozen at `5497390` (no P5 indexing); use v3 for current work unless you must stay on v2.
 
 ## Required layout
 

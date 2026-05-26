@@ -12,9 +12,9 @@
 
 ## Install from GitHub
 
-**Development (v3):** Clone [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3), then copy the **repository root** flat into `~/.cursor/skills/cursor-landing/` as above.
+**Current (v3):** Clone [cursor-landing-v3](https://github.com/rphoward/cursor-landing-v3), then copy the **repository root** flat into `~/.cursor/skills/cursor-landing/` as above.
 
-**Public release today:** [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2) — use until v3 is released.
+**Legacy (v2):** [cursor-landing-v2](https://github.com/rphoward/cursor-landing-v2) — frozen prior release (no indexing-ignore P5); only if you cannot use v3 yet.
 
 Restart Cursor and confirm **`/cursor-landing`** on a target repo.
 
