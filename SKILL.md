@@ -97,6 +97,12 @@ disable-model-invocation: true
   ; ── PHASE 2 — WRITE ──
   (phase_2_write
     (initializer_only)
+
+    (managed_block_write_policy
+      (if_missing create_from_template_including_markers_and_body)
+      (if_exists_begin_marker_present replace_managed_block_from_template do_not_touch_lines_outside_markers)
+      (if_exists_no_begin_marker append_managed_block_once_from_template do_not_remove_user_lines))
+
     (phase_2_route
       (Q16_split_when user_yes_Q16
         (order split_AGENTS_GEMINI_then CONTEXT_then cursor_rules))
@@ -108,8 +114,7 @@ disable-model-invocation: true
           (append_only_if_exists at_target_repo_root)
           (examples tracked_secrets_user_confirmed)
           (forbid AGENTS_md GEMINI_md dot_agent_paths unless_user_explicit))
-        (templates conduct.template.mdc safety.template.mdc unless Q13_combined)
-        (still_run indexing_ignore always))
+        (templates conduct.template.mdc safety.template.mdc unless Q13_combined))
       (dual_host_when Q14_answer_keep_both_or_leave_AGENTS_GEMINI_no_Q16_and_not_Q16_split
         (order CONTEXT_then cursorignore_merge_then cursor_rules_only)
         (cursorignore
@@ -117,18 +122,14 @@ disable-model-invocation: true
           (markers
             begin "# >>> cursor-landing:cursorignore:dual-host BEGIN >>>"
             end   "# <<< cursor-landing:cursorignore:dual-host END <<<")
-          (if_missing create_from_template_including_markers_and_body)
-          (if_exists_begin_marker_present replace_managed_block_from_template do_not_touch_lines_outside_markers)
-          (if_exists_no_begin_marker append_managed_block_once_from_template do_not_remove_user_lines)
+          (write_policy managed_block_write_policy)
           (paths_outside_managed_block append_only_if_user_or_prior_init_added))
         (CLAUDE_md_in_cursorignore when Q14_sub_ask_yes)
         (templates conduct-dual-host.template.mdc safety-dual-host.template.mdc)
         (forbid conduct_links_AGENTS_as_cursor_source)
-        (remind new_Cursor_chat_after_cursorignore_written)
-        (still_run indexing_ignore always))
+        (remind new_Cursor_chat_after_cursorignore_written))
       (default
-        (order CONTEXT AGENTS_if_not_leave cursor_rules CLAUDE_optional)
-        (still_run indexing_ignore always)))
+        (order CONTEXT AGENTS_if_not_leave cursor_rules CLAUDE_optional)))
 
     (indexing_ignore
       (always_every_normal_phase_2_not_emergency)
@@ -142,9 +143,7 @@ disable-model-invocation: true
         (markers
           begin "# >>> cursor-landing:cursorindexingignore:baseline BEGIN >>>"
           end   "# <<< cursor-landing:cursorindexingignore:baseline END <<<")
-        (if_missing create_from_template_including_markers_and_body)
-        (if_exists_begin_marker_present replace_managed_block_from_template do_not_touch_lines_outside_markers)
-        (if_exists_no_begin_marker append_managed_block_once_from_template do_not_remove_user_lines))
+        (write_policy managed_block_write_policy))
       (step_2_append_trim_candidates
         (source phase_0_scan_report_trim_candidates_from_chat)
         (filter
@@ -199,7 +198,6 @@ disable-model-invocation: true
       (chat_only forbid_new_repo_doc_unless_user_asks)
       (forbid_in_user_chat skill_jargon SDK Merkle trim_candidates indexing_noise scan_report)
       (say_in_chat
-        (authority MERGE-TO-RULES_initializer_closeout)
         (deliver plain_english_six_bullets adapt_to_actual_phase_2_writes per MERGE-TO-RULES)
         (gates
           (new_chat_when
