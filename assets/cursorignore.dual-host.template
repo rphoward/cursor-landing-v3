@@ -1,8 +1,9 @@
 # Cursor Landing — dual-host (Q14 keep_both). Cursor Agent, search, and @ ignore these paths.
 # Use only when grill Q14 answer is keep_both — skip this file on cursor_only (see MERGE-TO-RULES.md § Grill Q14).
 # Antigravity / Gemini CLI do not read .cursorignore — AGENTS.md and GEMINI.md stay for those tools.
-# Merge: append lines only; do not remove user entries if .cursorignore already exists.
+# Merge: managed block replace-or-skip on re-init; append-only for paths outside markers (see SKILL.md phase_2_route).
 
+# >>> cursor-landing:cursorignore:dual-host BEGIN >>>
 AGENTS.md
 GEMINI.md
 **/GEMINI.md
@@ -10,3 +11,4 @@ GEMINI.md
 
 # Optional — enable when grill Q14 keep_both + sub-ask yes (ignore CLAUDE.md for Cursor):
 # CLAUDE.md
+# <<< cursor-landing:cursorignore:dual-host END <<<

@@ -37,7 +37,7 @@
        (ask "Will you keep using another AI tool or IDE on this repo (same AGENTS.md / GEMINI.md files), or is Cursor your main place to work?")
        (choices keep_both cursor_only)
        (if_keep_both
-         "Keep both: Leave those files for the other tool. Cursor gets its own rules under .cursor/rules/. Merge assets/cursorignore.dual-host.template append-only into .cursorignore so Cursor does not treat those root files as its instructions. After setup, open a new Cursor chat once.")
+         "Keep both: Leave those files for the other tool. Cursor gets its own rules under .cursor/rules/. Merge assets/cursorignore.dual-host.template via managed block (replace-or-skip when markers present; append-only outside markers) into .cursorignore so Cursor does not treat those root files as its instructions. After setup, open a new Cursor chat once.")
        (if_cursor_only
          "Cursor only: Set up Cursor rules and glossary. Do not add the dual-host .cursorignore block unless you still need certain files hidden from Cursor (scan or grill never-show-Agent paths only).")
        (sub_ask_when keep_both

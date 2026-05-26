@@ -28,12 +28,12 @@ Ask when scan shows `GEMINI.md` or `.agent/` plus `AGENTS.md` ([question-bank.md
 
 | Q14 answer | `.cursorignore` at target repo root | Other Phase 2 writes |
 |------------|-------------------------------------|----------------------|
-| **keep_both** | **Merge** [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) **append-only** (`AGENTS.md`, `GEMINI.md`, `**/GEMINI.md`, `.agent/`). Add `CLAUDE.md` only when Q14 sub-ask is **yes**. Remind user: **new Cursor chat** after write. | `CONTEXT.md` → dual-host conduct/safety templates → `.cursor/rules/` (extract, do not paste whole AGENTS/GEMINI). Leave AGENTS/GEMINI on disk. |
+| **keep_both** | **Merge** [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) using **managed-block replace-or-skip** (`# >>> cursor-landing:cursorignore:dual-host BEGIN >>>` … `END`): if the marker exists, replace only lines between markers from the current template; if the file is missing, create it; if the file exists but has no marker, append the managed block once. Paths outside the block stay as the user left them. Add `CLAUDE.md` inside the block only when Q14 sub-ask is **yes**. Remind user: **new Cursor chat** after write. | `CONTEXT.md` → dual-host conduct/safety templates → `.cursor/rules/` (extract, do not paste whole AGENTS/GEMINI). Leave AGENTS/GEMINI on disk. |
 | **cursor_only** | **Skip** dual-host template block. Optional **append-only** lines only for scan/grill **never-show-Agent** paths (e.g. tracked secrets the user must not expose to Cursor Agent). Do **not** list `AGENTS.md` / `GEMINI.md` / `.agent/` unless user explicitly asks to hide them. | `CONTEXT.md` → default or slim AGENTS per Q6 → `.cursor/rules/`. |
 
 **Why `.cursorignore` (keep_both):** Cursor [auto-loads root `AGENTS.md`](https://cursor.com/docs/context/rules). MDC text alone cannot block that. `.cursorignore` excludes Agent context, search, and `@` mentions. Antigravity / Gemini CLI do **not** read `.cursorignore`.
 
-**Template:** [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) — merge append-only; do not remove unrelated user entries.
+**Template:** [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) — managed block per [SKILL.md](../SKILL.md) `phase_2_route` dual-host `cursorignore`; do not remove unrelated user entries outside the markers.
 
 ---
 
@@ -67,7 +67,7 @@ Ask **separately** when scan found the file (or offer the dual-host preset in on
 
 > Leave `AGENTS.md` and `GEMINI.md` unchanged; write thin `CONTEXT.md`; **write or merge `.cursorignore`** so Cursor does not auto-load left-in-place agent files; build `.cursor/rules/` from **dual-host templates** (`conduct-dual-host`, `safety-dual-host`, `project-proof`) by extracting Cursor-facing guardrails from AGENTS, GEMINI, `.agent/rules/`, and legacy `.cursorrules`.
 
-**Default `.cursorignore` paths (Q14 keep_both):** see [Grill Q14](#grill-q14--cursorignore-policy) — template [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template). **Merge append-only** if `.cursorignore` already exists. **Optional:** `CLAUDE.md` when Q14 sub-ask is yes.
+**Default `.cursorignore` paths (Q14 keep_both):** see [Grill Q14](#grill-q14--cursorignore-policy) — template [assets/cursorignore.dual-host.template](../assets/cursorignore.dual-host.template). **Managed-block replace-or-skip** on re-init (not blind append of the dual-host paths). **Optional:** `CLAUDE.md` when Q14 sub-ask is yes.
 
 ---
 
@@ -112,7 +112,7 @@ If the agent cannot fill `extract_from` + `merge_preview` for a proposed rule, *
 
 ## Phase 2 — extract, do not duplicate
 
-**Indexing (every path):** Run [SKILL.md](../SKILL.md) `(indexing_ignore …)` **first** — `(phase_2_order 1..3)` baseline template → trim append (cap 8) → `read` `.cursorindexingignore` once. Matches [MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md) Phase 2 preamble.
+**Indexing (every path):** Run [SKILL.md](../SKILL.md) `(indexing_ignore …)` **first** — `(phase_2_order 1..3)` baseline from [cursorindexingignore.baseline.template](../assets/cursorindexingignore.baseline.template) using **managed-block replace-or-skip** (`# >>> cursor-landing:cursorindexingignore:baseline BEGIN >>>` … `END`): replace the block on re-init when the marker is present; create the file or append the block once when missing or legacy (no marker). Then **trim append** (cap 8 `indexing_noise` rows, **`skip_if path_already_present`** — append-if-missing per path). Then `read` `.cursorindexingignore` once. User lines outside the markers are not removed. Matches [MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md) Phase 2 preamble.
 
 **Order (Q16 yes):** **indexing_ignore** → split AGENTS/GEMINI per extraction table → `CONTEXT.md` → `.cursor/rules/` (extract from **updated** files). **Forbid** split until Q6 **merge on both** AGENTS and GEMINI.
 
@@ -121,7 +121,7 @@ If the agent cannot fill `extract_from` + `merge_preview` for a proposed rule, *
 **Order (cursor-only / default brownfield):** **indexing_ignore** → `CONTEXT.md` → `AGENTS.md` (if Q6 not leave) → `.cursor/rules/` → optional `CLAUDE.md`.
 
 1. **CONTEXT** — approved `proposed_glossary` + Phase 1 Q4 disambiguation; fallback: nouns from AGENTS/GEMINI **glossary sections only** (not project map trees). See [CONTEXT-FORMAT.md](CONTEXT-FORMAT.md).
-2. **`.cursorignore`** — from [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template); include paths user confirmed in Q14 closeout; uncomment `CLAUDE.md` only when Q14 sub-ask is yes.
+2. **`.cursorignore`** (Q14 **keep_both** only) — from [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) with the same **managed-block replace-or-skip** policy as Q14; include paths user confirmed in Q14 closeout; uncomment `CLAUDE.md` only when Q14 sub-ask is yes. Skip this file on **cursor_only**.
 3. **conduct.mdc + safety.mdc** — from **dual-host templates** ([conduct-dual-host.template.mdc](../assets/conduct-dual-host.template.mdc), [safety-dual-host.template.mdc](../assets/safety-dual-host.template.mdc)), then **graft** bullets from `extract_from` (dedupe; max ~40 lines always-on each). **Do not** link `AGENTS.md` or `GEMINI.md` as Cursor instruction or proof source in always-on rules.
 4. **Glob / agent_request rules** — one concern per file; link [`CONTEXT.md`](../../CONTEXT.md). Optional deferral lines for humans only (not Cursor instruction source):
 
@@ -185,6 +185,7 @@ After Phase 2 writes, finish init in **chat** with plain English. Loader: [SKILL
 4. **Proof** — The proof command from grill Q3: run it or say *proof not run*; do not change the command wording.
 5. **Ignore ≠ security** — One line: ignore files help Cursor’s editor features; they are **not** full security — terminal and other tools may still read files on disk.
 6. **Search refresh** — One line: search and index refresh run in the **background**; for best `@` results after ignore changes, **start a new chat**.
+7. **Re-run safe** — When Phase 2 wrote or updated `.cursorindexingignore` or `.cursorignore`: it is **safe to run `/cursor-landing` again** on this repo; managed sections refresh from the skill templates without duplicating baseline globs or dual-host paths. If someone deletes the `BEGIN`/`END` marker comments, a later run may append again — see [troubleshooting.md](troubleshooting.md).
 
 The checklist below is for **agent verification**, not user-facing closeout copy.
 
@@ -200,7 +201,8 @@ The checklist below is for **agent verification**, not user-facing closeout copy
 | Extraction trace | Chat or handback lists `source_paths` → rule mapping |
 | Proof | Q3 command runnable or noted *proof not run* |
 | Q16 post-split | If Q16 yes: checklist (1)–(4) echoed |
-| `.cursorignore` | Exists at repo root; lists `AGENTS.md`, `GEMINI.md`, `.agent/` (and `CLAUDE.md` if Q14 sub-ask yes); merge did not remove unrelated user entries |
+| `.cursorignore` | Exists at repo root; lists `AGENTS.md`, `GEMINI.md`, `.agent/` (and `CLAUDE.md` if Q14 sub-ask yes); managed block replace-or-skip on re-init; user lines outside markers untouched |
+| `.cursorindexingignore` re-init | Baseline managed block uses replace-or-skip when `cursor-landing:cursorindexingignore:baseline` markers present; trim paths use append-if-missing (cap 8) |
 | `conduct.mdc` (dual-host) | Uses dual-host template shape; proof from `project-proof.mdc` — not `AGENTS.md` as Cursor source |
 | New Cursor chat | User reminded to start a **new** Cursor chat after `.cursorignore` write (context reload) |
 | Grill closeout | Phase 1 summary confirmed before Phase 2 — [SKILL.md](../SKILL.md); Q14 closeout listed ignore paths |

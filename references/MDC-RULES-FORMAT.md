@@ -93,12 +93,12 @@ Repeat per planned rule:
 
 Authoritative workflow: [SKILL.md](../SKILL.md) `(indexing_ignore …)` and route-specific orders in [MERGE-TO-RULES.md](MERGE-TO-RULES.md).
 
-**Always first (normal init, not emergency):** `.cursorindexingignore` at target repo root — baseline from [assets/cursorindexingignore.baseline.template](../assets/cursorindexingignore.baseline.template) (append-only if file exists) → append up to **8** Phase 0 `trim_candidates` (`type_id` `indexing_noise`, `suggested_action` `append_indexing_ignore`) → **`read`** that file once (best-effort index nudge). Do not echo baseline globs inside Phase 0 `(scan_report …)`; do not auto-edit target `.gitignore`.
+**Always first (normal init, not emergency):** `.cursorindexingignore` at target repo root — baseline from [assets/cursorindexingignore.baseline.template](../assets/cursorindexingignore.baseline.template) (managed block replace-or-skip when `cursor-landing:cursorindexingignore:baseline` markers exist; first-time create or append managed block once otherwise) → append up to **8** Phase 0 `trim_candidates` (`type_id` `indexing_noise`, `suggested_action` `append_indexing_ignore`, `skip_if` path already present) → **`read`** that file once (best-effort index nudge). Do not echo baseline globs inside Phase 0 `(scan_report …)`; do not auto-edit target `.gitignore`.
 
 Then (per grill path — see MERGE):
 
 1. `CONTEXT.md` (glossary)
-2. **Dual-host only:** `.cursorignore` (merge append-only) — then skip step 3 below for AGENTS/GEMINI when Q6 = leave
+2. **Dual-host only:** `.cursorignore` (managed block replace-or-skip per dual-host template; append-only outside markers) — then skip step 3 below for AGENTS/GEMINI when Q6 = leave
 3. `AGENTS.md` — **default Q6 leave** when brownfield file exists; proof/deploy/monorepo go to **`project-proof.mdc`** / stack globs instead
 4. `.cursor/rules/` — **conduct + safety** (template per table above); then **`proposed_mdc_rules`** from scan + Q15 (stack Tier A); skip stack `.mdc` writes when Q15 **scan_only**
 5. Optional `CLAUDE.md` bridge per annex (omit from `.cursorignore` when Q14 CLAUDE sub-ask is no)

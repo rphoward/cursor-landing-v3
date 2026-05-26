@@ -108,6 +108,8 @@ Phase 2 waits for **your answer per file (Q6)** and a **closeout you approve**. 
 
 `.cursorindexingignore` and `.cursorignore` affect what Cursor indexes and loads in the editor and in **@** search. They are **not** full security — terminals and other tools may still read those paths. Official reference: [Cursor ignore files](https://cursor.com/docs/reference/ignore-file).
 
+**Running init again:** It is **safe to run `/cursor-landing`** on a repo that already went through setup — the skill refreshes its marked sections instead of duplicating the same baseline or dual-host paths. You might see **duplicate lines** only if the marker comments were removed from an ignore file or you copied paths in by hand outside the skill’s block. Details: [MERGE-TO-RULES.md](MERGE-TO-RULES.md) Phase 2 and Phase 3 closeout.
+
 ---
 
 ## Antigravity or Gemini CLI after a split (Q16)

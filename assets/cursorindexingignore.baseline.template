@@ -4,6 +4,7 @@
 # .gitignore is thin or teams want explicit indexing-only exclusions.
 # Do not paste this list into the Phase 0 (scan_report …) chat blob — repo-specific paths use trim_candidates.
 
+# >>> cursor-landing:cursorindexingignore:baseline BEGIN >>>
 # Dependencies & package managers
 node_modules/
 vendor/
@@ -51,3 +52,4 @@ htmlcov/
 *.log
 .env.local
 .env.*.local
+# <<< cursor-landing:cursorindexingignore:baseline END <<<

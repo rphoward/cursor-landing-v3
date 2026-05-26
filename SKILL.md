@@ -112,7 +112,15 @@ disable-model-invocation: true
         (still_run indexing_ignore always))
       (dual_host_when Q14_answer_keep_both_or_leave_AGENTS_GEMINI_no_Q16_and_not_Q16_split
         (order CONTEXT_then cursorignore_merge_then cursor_rules_only)
-        (cursorignore template assets/cursorignore.dual-host.template append_only_if_exists)
+        (cursorignore
+          (template assets/cursorignore.dual-host.template)
+          (markers
+            begin "# >>> cursor-landing:cursorignore:dual-host BEGIN >>>"
+            end   "# <<< cursor-landing:cursorignore:dual-host END <<<")
+          (if_missing create_from_template_including_markers_and_body)
+          (if_exists_begin_marker_present replace_managed_block_from_template do_not_touch_lines_outside_markers)
+          (if_exists_no_begin_marker append_managed_block_once_from_template do_not_remove_user_lines)
+          (paths_outside_managed_block append_only_if_user_or_prior_init_added))
         (CLAUDE_md_in_cursorignore when Q14_sub_ask_yes)
         (templates conduct-dual-host.template.mdc safety-dual-host.template.mdc)
         (forbid conduct_links_AGENTS_as_cursor_source)
@@ -125,14 +133,18 @@ disable-model-invocation: true
     (indexing_ignore
       (always_every_normal_phase_2_not_emergency)
       (target .cursorindexingignore at_target_repo_root)
-      (template assets/cursorindexingignore.baseline.template append_only_if_exists)
+      (template assets/cursorindexingignore.baseline.template managed_block_replace_or_skip)
       (phase_2_order
         (1 write_baseline_from_template)
         (2 append_indexing_noise_trim_candidates)
         (3 read_target_root_cursorindexingignore_once))
       (step_1_write_baseline
-        (if_missing create_from_template)
-        (if_exists append_template_lines_only do_not_remove_user_lines))
+        (markers
+          begin "# >>> cursor-landing:cursorindexingignore:baseline BEGIN >>>"
+          end   "# <<< cursor-landing:cursorindexingignore:baseline END <<<")
+        (if_missing create_from_template_including_markers_and_body)
+        (if_exists_begin_marker_present replace_managed_block_from_template do_not_touch_lines_outside_markers)
+        (if_exists_no_begin_marker append_managed_block_once_from_template do_not_remove_user_lines))
       (step_2_append_trim_candidates
         (source phase_0_scan_report_trim_candidates_from_chat)
         (filter
@@ -193,6 +205,9 @@ disable-model-invocation: true
           (new_chat_when
             (or wrote_cursorignore_for_dual_host
                 indexing_ignore_changed_and_user_cares_about_at_search))
+          (re_run_safe_when
+            (or wrote_cursorindexingignore wrote_cursorignore_for_dual_host)
+            (say_per MERGE-TO-RULES_initializer_closeout bullet_7_plain_english))
           (proof_from Q3_unchanged_wording)
           (forbid skill_jargon_in_user_copy))))
     (link_check)
