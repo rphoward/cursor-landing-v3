@@ -23,7 +23,7 @@ You're about to do it again.
 | **`AGENTS.md`** | Only if Q6 replace/merge — default **leave** when other hosts use it |
 | **`docs/EMERGENCY-HANDOFF.md`** | `/cursor-landing emergency` only |
 
-Details: [OVERVIEW.md](OVERVIEW.md) · [SKILL.md](SKILL.md)
+Details: [OVERVIEW.md](OVERVIEW.md) · [SKILL.md](SKILL.md) · [forum host comparison](references/annexes/forum-summary.md)
 
 ---
 
