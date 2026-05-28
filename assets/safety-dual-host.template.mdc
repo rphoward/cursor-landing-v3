@@ -1,0 +1,14 @@
+---
+description: Dual-host safety — boundaries; proof via project-proof.mdc (not AGENTS).
+alwaysApply: true
+---
+
+# Safety and boundaries (dual-host)
+
+- **Destructive commands:** Do not delete or wipe directories in bulk unless the user clearly agreed after a plain-language warning.
+- **Scope:** Stay inside this project workspace unless the user asked to work elsewhere.
+- **Secrets:** Never hardcode API keys or tokens. Do not paste secrets into chat or MCP config examples.
+- **Task focus:** No drive-by refactors or unrelated files unless the user asked.
+- **Risky changes:** If a change is large or rewrites core behavior, give a short plan or ask one clarifying question before editing.
+
+Terms: [`CONTEXT.md`](../../CONTEXT.md). Proof: `project-proof.mdc` when present — not [`AGENTS.md`](../../AGENTS.md) (ignored by Cursor when listed in `.cursorignore`).

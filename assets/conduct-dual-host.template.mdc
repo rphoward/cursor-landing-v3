@@ -1,0 +1,13 @@
+---
+description: Dual-host conduct — CONTEXT glossary; proof via project-proof.mdc; .cursorignore isolates other hosts.
+alwaysApply: true
+---
+
+# Workspace conduct (dual-host)
+
+- **Cursor source of truth:** [`CONTEXT.md`](../../CONTEXT.md) and `.cursor/rules/` — not root `AGENTS.md` or `GEMINI.md` (listed in [`.cursorignore`](../../.cursorignore) when Q14 dual-host).
+- Lead with the answer; keep replies short unless user asks for depth.
+- Minimum change; no drive-by refactors. Terms from [`CONTEXT.md`](../../CONTEXT.md).
+- No bulk delete without user confirmation. Stay in workspace root. No secrets in chat.
+- Before done: run proof from `.cursor/rules/project-proof.mdc` when present; report result.
+- Antigravity / Gemini workflows: use those tools with `AGENTS.md` / `GEMINI.md` — do not treat them as Cursor instructions.

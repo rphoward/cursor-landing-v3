@@ -1,0 +1,11 @@
+---
+description: Workspace conduct — link CONTEXT.md; surgical edits; safety.
+alwaysApply: true
+---
+
+# Workspace conduct
+
+- Lead with the answer; keep replies short unless user asks for depth.
+- Minimum change; no drive-by refactors. Terms from [`CONTEXT.md`](../../CONTEXT.md). Guardrails: [`AGENTS.md`](../../AGENTS.md).
+- No bulk delete without user confirmation. Stay in workspace root. No secrets in chat.
+- Before done: run proof from this repo’s `project-proof.mdc` when present; else [`AGENTS.md`](../../AGENTS.md); report result.

@@ -1,0 +1,55 @@
+# Cursor Landing — baseline codebase indexing exclusions.
+# Phase 2 writes this file to the target repo root as .cursorindexingignore (managed block replace-or-skip on re-init; append-only outside markers — see SKILL.md managed_block_write_policy).
+# Syntax matches .gitignore. Cursor already honors .gitignore; these patterns reduce search noise when
+# .gitignore is thin or teams want explicit indexing-only exclusions.
+# Do not paste this list into the Phase 0 (scan_report …) chat blob — repo-specific paths use trim_candidates.
+
+# >>> cursor-landing:cursorindexingignore:baseline BEGIN >>>
+# Dependencies & package managers
+node_modules/
+vendor/
+.pnp/
+.pnp.js
+bower_components/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.tox/
+.eggs/
+*.egg-info/
+
+# Build & framework output
+dist/
+build/
+out/
+target/
+.next/
+.nuxt/
+.svelte-kit/
+.cache/
+.parcel-cache/
+.turbo/
+*.min.js
+*.min.css
+
+# Coverage & test artifacts
+coverage/
+htmlcov/
+.nyc_output/
+
+# IDE & OS clutter
+.DS_Store/
+.idea/
+*.swp
+*.swo
+
+# Logs & local env (indexing noise; block agent access via .cursorignore when secrets matter)
+*.log
+.env.local
+.env.*.local
+# <<< cursor-landing:cursorindexingignore:baseline END <<<
