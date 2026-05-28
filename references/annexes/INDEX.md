@@ -12,7 +12,7 @@ Human setup guide (**Cursor Landing**): [../../README.md](../../README.md) — n
 | **Host annexes (this folder)** | `cursor.md`, `codex.md`, `claude.md`, `gemini.md`, `copilot.md`, `cline.md`, `windsurf.md`, `kiro.md`, `augment-intent.md`, `amp.md`, `mcp.md` | What files **each tool** may read — for **detection and trimming**, not for executing this skill |
 | **Add/remove hosts** | [../HOST-EXTENSION.md](../HOST-EXTENSION.md) | Maintainer recipe — annex + INDEX + checklist |
 | **Shared scan** | [../scan-checklist.md](../scan-checklist.md), [../stack-signals.md](../stack-signals.md), [../SCAN-REPORT-SCHEMA.md](../SCAN-REPORT-SCHEMA.md) | Checklist + stack/infra signals + Phase 0 `(scan_report ...)` shape |
-| **Grill** | [../question-bank.md](../question-bank.md) | Question ids Q1–Q15 (Q15 stack → `.mdc` or scan-only) |
+| **Grill** | [../question-bank.md](../question-bank.md) | Question ids Q1–Q16 (Q15 stack → `.mdc` or scan-only; Q16 GEMINI split) |
 | **Skill packaging** | [../../BUNDLE-MANIFEST.md](../../BUNDLE-MANIFEST.md) | Ship boundary + required files (install bundle) |
 
 **Do not** merge annex content into `AGENTS.md`, `CONTEXT.md`, or `.mdc` during init unless the user asked to document a specific tool.

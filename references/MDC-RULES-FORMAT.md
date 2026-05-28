@@ -91,11 +91,7 @@ Repeat per planned rule:
 
 ## Phase 2 write order (target repo)
 
-Authoritative workflow: [SKILL.md](../SKILL.md) `(indexing_ignore …)` and `(phase_2_route …)`; per-route step detail in [MERGE-TO-RULES.md](MERGE-TO-RULES.md).
-
-**Always first (normal init, not emergency):** `.cursorindexingignore` per [SKILL.md](../SKILL.md) `(indexing_ignore …)` — `(step_1_write_baseline …)` uses `(managed_block_write_policy …)` and [cursorindexingignore.baseline.template](../assets/cursorindexingignore.baseline.template); then trim append (cap **8**, `skip_if` path present) and one `read`. Do not echo baseline globs in Phase 0 `(scan_report …)`; do not auto-edit target `.gitignore`.
-
-Then, per grill route, the order lives in [SKILL.md](../SKILL.md) `(phase_2_route …)` (`q16_split` | `cursor_only` | `dual_host` | `default`); per-route step detail and the dual-host `.cursorignore` step are in [MERGE-TO-RULES.md](MERGE-TO-RULES.md) Phase 2.
+**Order:** [SKILL.md](../SKILL.md) `(indexing_ignore …)` first (Cursor `.cursorindexingignore` only), then `(phase_2_route …)`; merge/dual-host file steps in [MERGE-TO-RULES.md](MERGE-TO-RULES.md) Phase 2.
 
 **This file owns only the `.mdc` step:** write **conduct + safety** always-on (template per the table above), then **`proposed_mdc_rules`** from scan + Q15 — skip stack Tier A `.mdc` writes when Q15 is **scan_only**.
 

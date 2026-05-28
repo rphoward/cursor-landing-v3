@@ -112,12 +112,12 @@ If the agent cannot fill `extract_from` + `merge_preview` for a proposed rule, *
 
 ## Phase 2 — extract, do not duplicate
 
-**Indexing (every path):** Run [SKILL.md](../SKILL.md) `(indexing_ignore …)` **first** — authoritative `(phase_2_order 1..3)`, `(managed_block_write_policy …)`, and baseline markers in `step_1_write_baseline`; template [cursorindexingignore.baseline.template](../assets/cursorindexingignore.baseline.template). Trim append, read-once, and forbids: same `(indexing_ignore …)` block. See [MDC-RULES-FORMAT.md](MDC-RULES-FORMAT.md) Phase 2 preamble.
+**Indexing (Cursor only):** [SKILL.md](../SKILL.md) `(indexing_ignore …)` runs first on every normal init path — steps, markers, trim cap, and forbids are defined only there (`.cursorindexingignore` is not an Antigravity/Gemini file).
 
-**Route order is authoritative in** [SKILL.md](../SKILL.md) `(phase_2_route …)` — first match of `q16_split` | `cursor_only` | `dual_host` | `default`, each running **after** `indexing_ignore` (above). **Forbid** the `q16_split` route until Q6 is **merge on both** AGENTS and GEMINI. Per-step detail follows.
+**Routes:** [SKILL.md](../SKILL.md) `(phase_2_route …)` — `q16_split` | `cursor_only` | `dual_host` | `default`, after indexing. `dual_host` when Q14 **keep_both**, or when Q6 **leave** on both AGENTS and GEMINI and scan found dual-host surfaces (GEMINI / `.agent/` + AGENTS) — see [annexes/gemini.md](annexes/gemini.md) and the dual-host preset below. **Forbid** `q16_split` unless Q6 is **merge on both**. Per-route file steps:
 
 1. **CONTEXT** — approved `proposed_glossary` + Phase 1 Q4 disambiguation; fallback: nouns from AGENTS/GEMINI **glossary sections only** (not project map trees). See [CONTEXT-FORMAT.md](CONTEXT-FORMAT.md).
-2. **`.cursorignore`** (Q14 **keep_both** only) — from [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) per [SKILL.md](../SKILL.md) dual-host `cursorignore` + `(managed_block_write_policy …)`; include paths user confirmed in Q14 closeout; uncomment `CLAUDE.md` only when Q14 sub-ask is yes. Skip this file on **cursor_only**.
+2. **`.cursorignore`** on **`dual_host` route** (Q14 **keep_both**, or Q6 **leave** both + scan dual-host surfaces) — from [cursorignore.dual-host.template](../assets/cursorignore.dual-host.template) per [SKILL.md](../SKILL.md); paths user confirmed in Q14 closeout when Q14 ran; uncomment `CLAUDE.md` only when Q14 sub-ask is yes. Skip on **cursor_only** and on **default** when dual-host surfaces were not in scan.
 3. **conduct.mdc + safety.mdc** — from **dual-host templates** ([conduct-dual-host.template.mdc](../assets/conduct-dual-host.template.mdc), [safety-dual-host.template.mdc](../assets/safety-dual-host.template.mdc)), then **graft** bullets from `extract_from` (dedupe; max ~40 lines always-on each). **Do not** link `AGENTS.md` or `GEMINI.md` as Cursor instruction or proof source in always-on rules.
 4. **Glob / agent_request rules** — one concern per file; link [`CONTEXT.md`](../../CONTEXT.md). Optional deferral lines for humans only (not Cursor instruction source):
 

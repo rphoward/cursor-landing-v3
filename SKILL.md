@@ -107,7 +107,7 @@ disable-model-invocation: true
       ; first matching route wins, top to bottom; an earlier route claims its
       ; case, so later routes need no negative guards
       (route q16_split
-        (when (yes Q16))
+        (when (and (yes Q16) Q6_merge_on_both_AGENTS_and_GEMINI))
         (order split_AGENTS_GEMINI CONTEXT cursor_rules))
       (route cursor_only
         (when (eq Q14 cursor_only))
@@ -120,7 +120,14 @@ disable-model-invocation: true
           (forbid AGENTS_md GEMINI_md dot_agent_paths unless_user_explicit))
         (templates conduct.template.mdc safety.template.mdc unless Q13_combined))
       (route dual_host
-        (when (or (eq Q14 keep_both) (leave AGENTS GEMINI)))
+        ; Q14 keep_both, or brownfield Antigravity: Q6 leave on both + scan saw
+        ; GEMINI.md or .agent/ with AGENTS.md (see annexes/gemini.md, MERGE preset).
+        ; Forbid when Q14 cursor_only. Do not use default route for that case.
+        (when (and (not (eq Q14 cursor_only))
+                   (or (eq Q14 keep_both)
+                       (and (Q6_leave AGENTS) (Q6_leave GEMINI) (scan_dual_host_surfaces)))))
+        (scan_dual_host_surfaces
+          (same_trigger_as_grill_Q14 GEMINI_md_or_dot_agent plus AGENTS_md))
         (order CONTEXT cursorignore_merge cursor_rules_only)
         (cursorignore
           (template assets/cursorignore.dual-host.template)

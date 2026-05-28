@@ -15,7 +15,7 @@ LICENSE
 
 references/
   SCAN-REPORT-SCHEMA.md          ← (scan_report ...) + extract_from_shape + stack_mdc_caps
-  question-bank.md               ← pseudo-Lisp grill (Q1–Q15)
+  question-bank.md               ← pseudo-Lisp grill (Q1–Q16)
   scan-checklist.md              ← Phase 0 checkboxes (links catalog + schema caps)
   stack-signals.md               ← pseudo-Lisp (stack_signals_catalog …) — not markdown tables
   examples/scan-report-example.md
@@ -49,7 +49,7 @@ assets/
 scripts/README.md                ← reserved (no scanner in v1)
 ```
 
-Parent repo (not copied on install): `lisp_bundle_checks.py`, `check-parens.py`, `validate-lisp-bundle.py` — run before push.
+Parent folder (not copied on install): `../lisp_bundle_checks.py`, `../check-parens.py`, `../validate-lisp-bundle.py` — stdlib-only; run from `github-publish-lisp/` before `git subtree push`. Ship git root is **`github-publish-lisp/`**, not this subfolder.
 
 **Authority map:** [MERGE-TO-RULES.md](references/MERGE-TO-RULES.md) = grill policy (Q14/Q16, extraction, closeout); `SKILL.md` + [question-bank.md](references/question-bank.md) = thin loaders; [SCAN-REPORT-SCHEMA.md](references/SCAN-REPORT-SCHEMA.md) = scan shape.
 
@@ -77,6 +77,5 @@ Phase 0 chat: one `(scan_report …)` only — no JSON block. `extract_from` sha
 
 ## Verify before push
 
-- `python github-publish-lisp/validate-lisp-bundle.py` exits 0 (name, forbidden paths, invoke grep, parens)
-- `python github-publish-lisp/check-parens.py` exits 0 (SKILL body + pseudo-Lisp refs including `stack-signals.md`)
-- [../REVIEW-BEFORE-PUSH.md](../REVIEW-BEFORE-PUSH.md) checklist
+- From `github-publish-lisp/`: `python validate-lisp-bundle.py` and `python check-parens.py` exit 0
+- [../REVIEW-BEFORE-PUSH.md](../REVIEW-BEFORE-PUSH.md) checklist; `git subtree push --prefix=cursor-landing-skill origin main`
